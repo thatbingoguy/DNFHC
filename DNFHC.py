@@ -3,31 +3,59 @@
 import os
 from random import *
 from time import sleep
+def dprint(message):
+	print('\r',message,end='')
 print("  _____    _   _   ______   _    _    _____ ")
 print(" |  __ \  | \ | | |  ____| | |  | |  / ____|")
 print(" | |  | | |  \| | | |__    | |__| | | |     ")
 print(" | |  | | | . ` | |  __|   |  __  | | |     ")
 print(" | |__| | | |\  | | |      | |  | | | |____ ")
 print(" |_____/  |_| \_| |_|      |_|  |_|  \_____|")
-sleep(randint(1,3))
+sleep(0.3)
 print()
 print()
 print("Attempting to connect to servers...")
-sleep(randint(1,4))
+sleep(randint(0,1))
 print("Connection succeeded.")
 print("Downloading new client files...")
 print("Download progress: 0")
 sleep(1)
-print("Download progress: ", randint(1,25))
+print("Download progress: ", randint(10,25))
 sleep(1)
 print("Download progress: ", randint(50,80))
 sleep(1)
 print("Download progress: 100")
 print("Download Complete.")
+#print()
+#dprint("Downloading, Progress:   0% [          ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  10% [=         ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  20% [==        ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  30% [===       ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  40% [====      ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  50% [=====     ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  60% [======    ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  70% [=======   ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  80% [========  ]")
+#sleep(0.2)
+#dprint("Downloading, Progress:  90% [========= ]")
+#sleep(0.2)
+#dprint("Downloading, Progress: 100% [==========]")
+#sleep(0.2)
+#print()
+#print("Download complete.")
+# failed progress bar ^
 sleep(1)
 print("Attemping to find javaw.exe...")
 def getTasks(name):
-	r = os.popen('tasklist /v').read().strip().split('\n')
+	r = os.popen('tasklist').read().strip().split('\n')
 	for i in range(len(r)):
 		s = r[i]
 		if name in r[i]:
@@ -60,7 +88,6 @@ if __name__ == '__main__':
 
 	else:
 		pass
-
 print('Minecraft detected, attemping to inject...')
 sleep(randint(1,3))
 injectSuccessChance = randint(0,99)
@@ -71,19 +98,33 @@ if injectSuccessChance < 1:
 else:
 	pass
 print("Injection successful.")
-print()
-print()
-print("DNFHC Injection Client. Type \'help\' for help.")
+sleep(1)
+def clearscreen():
+	os.system("cls")
+	print("  _____    _   _   ______   _    _    _____ ")
+	print(" |  __ \  | \ | | |  ____| | |  | |  / ____|")
+	print(" | |  | | |  \| | | |__    | |__| | | |     ")
+	print(" | |  | | | . ` | |  __|   |  __  | | |     ")
+	print(" | |__| | | |\  | | |      | |  | | | |____ ")
+	print(" |_____/  |_| \_| |_|      |_|  |_|  \_____|")
+	print()
+	print()
+	print("DNFHC Injection Client. Type \'help\' for help.")
+clearscreen()
 # this is where it gets messy, copypasted from required.py
 reachcmd = "reach"
-autoclckcmd = "autoclck"
+autoclckcmd = "autoclick"
 kbcmd = "kb"
 helpcmd = "help"
 listcmd = "listset"
+sdcmd = "sd"
+mpcmd = "misplace"
+clscmd = "clearscreen"
 reachvar = 0
 acvar = 0
 kbvar = 100
 antikb = False
+misplace = False
 while True:
 	dcmd = input("$>> ")
 	# if i want to make dcmd back into one command instead of adding another variable with it,
@@ -161,12 +202,33 @@ while True:
 	elif dcmd == helpcmd:
 		print("reach - Sets the amount of reach added to Minecraft. 0 would set the client side reach to 3, while 2 would set to 5.")
 		print()
-		print("autoclck - Randomizes around set CPS. Undetectable by server-side anticheats, utilizing white noise to determine when to click. Range from 0-20, 0 will disable, while 20 will hover around 20, but not go over due to the tick system.")
+		print("autoclick - Randomizes around set CPS. Undetectable by server-side anticheats, utilizing white noise to determine when to click. Range from 0-20, 0 will disable, while 20 will hover around 20, but not go over due to the tick system.")
 		print()
 		print("kb - Sets percent of velocity. 0 will enable AntiKnockback, while anything from 1-99 will set the amount of velocity knockback will deal. 100 disables this module.")
 		print()
 		print("listset - Shows you your current settings in the client.")
 		print()
+		print("sd - Self destruct; Uninjects from the Minecraft client and closes the injector for you to delete it in a hurry. (Screenshare friendly)")
+		print()
+		print("clearscreen - Clears screen.")
+		print()
 		print("Don't do something like \"kb 42\", just type in \"kb\", and wait for it to ask you for a number.")
+	elif dcmd == sdcmd:
+		print("Unhooking from javaw.exe")
+		sleep(0.1)
+		print("Deleting temporary log files...")
+		sleep(0.2)
+		print("Goodbye!")
+		sleep(0.1)
+		exit()
+	elif dcmd == mpcmd:
+		if misplace == False:
+			print("Misplace enabled.")
+			misplace = True
+		else:
+			print("Misplace disabled.")
+			misplace = False
+	elif dcmd == clscmd:
+		clearscreen()
 	else:
 		print("Unknown command. Type \'help\' for help.")
